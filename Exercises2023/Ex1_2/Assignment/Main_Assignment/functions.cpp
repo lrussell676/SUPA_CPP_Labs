@@ -3,6 +3,7 @@
    --------------------------------------------------------------------------------------------- */
 
 #include "directives.h"
+#include "aux_cli_messages.cpp"
 
 /* ---- Opening a text file containing (x,y) Data, Saves to 2D vector -----------------------------
    --------- Corresponds to: STEPS 1,   Main Assignment (partially) -------------------------------
@@ -88,4 +89,51 @@ std::vector<double>  calc_magnitude(std::vector<std::vector<double>>&
     }
 
     return mag_vec;
+}
+
+/* ---- Print condition for vector magnitudes of --------------------------------------------------
+   --------- Corresponds to: STEPS 2,   Main Assignment -------------------------------------------
+   ------------------------- STEPS 5-6, Instructions ------------------------------------------- */
+
+void print_condition_vec_mag(std::vector<double> vec_mag) {
+    std::cout << "\nAfter calculating the magnitude of these vectors, would you like " \
+   "these \nprinted to the terminal as well? (type \"y\" for yes, or " \
+   "enter any other \nkey to continue with calculation only)."
+   << std::endl;
+
+   std::string in;
+   std::cin >> in;
+
+   int n;
+
+   if (in == "y") {
+      std::cout << "Ok, here are the calculated vector magnitudes. But first,\n" \
+      "Please specify an INTEGER value of lines " \
+      "you wish to print:" << std::endl;
+      std::cin >> n;
+      if ( n > vec_mag.size() ) {
+         std::cout << "WARNING: your value of \'n\' is larger than the number " \
+         "of data points within this vector. \nOnly the first 5 data points " \
+         "will be printed to the terminal." << std::endl;
+         do {
+            std::cout << "Press Enter to continue..." << std::endl;
+         } while (std::cin.get() != '\n');
+         std::cin.get();
+         n = 5;
+         for (int i=0; i<n; i++) {
+            std::cout << vec_mag[i] << std::endl;
+         }
+      } else {
+         std::cout << "Ok, " << n << " vector magnitudes will now sequentially be " \
+        "printed to the terminal." << std::endl;
+        do {
+            std::cout << "Press Enter to continue..." << std::endl;
+        } while (std::cin.get() != '\n');
+        std::cin.get();
+         print_mag_calc(vec_mag,n);
+      }
+   } else {
+        std::cout << "Ok, the calculated vector magnitudes have just been stored." 
+        << std::endl;
+   }
 }
