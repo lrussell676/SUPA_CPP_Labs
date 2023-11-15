@@ -62,3 +62,11 @@ void print_input_2D_vector(std::vector<std::vector<double>> data_vec) {
         }
     }
 }
+
+/* ---- STEPS 5-6 FROM INSTRUCTIONS ------------------------------------------------------------ */
+
+void print_mag_calc(std::vector<double> mag_print, int n){
+    for (int i=0; i<n; i++) {
+            std::cout << mag_print[i] << std::endl;
+        }
+}

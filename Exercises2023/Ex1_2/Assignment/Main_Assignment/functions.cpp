@@ -5,8 +5,8 @@
 #include "directives.h"
 
 /* ---- Opening a text file containing (x,y) Data, Saves to 2D vector -----------------------------
-   --------- Corresponds to: STEPS 1,  Main Assignment (partially) --------------------------------
-   ------------------------- STEPS 1-2 Instructions -------------------------------------------- */
+   --------- Corresponds to: STEPS 1,   Main Assignment (partially) -------------------------------
+   ------------------------- STEPS 1-2, Instructions ------------------------------------------- */
 
 
 std::vector<std::vector<double>> read_data_from_file(
@@ -66,4 +66,26 @@ std::vector<std::vector<double>> read_data_from_file(
 
    return input_data_read_in;
 
+}
+
+/* ---- Calculates magnitude of 2D vectors as ((0,0),(x,y)) ---------------------------------------
+   --------- Corresponds to: STEPS 2,   Main Assignment -------------------------------------------
+   ------------------------- STEPS 4,   Instructions ------------------------------------------- */
+
+std::vector<double>  calc_magnitude(std::vector<std::vector<double>>& 
+    data_vec) {
+
+    int n = data_vec[0].size();
+    std::vector<double> mag_vec(n);
+
+    double x, y, v;
+
+    for (int i=0; i<n; i++) {
+        x = data_vec[0][i]*data_vec[0][i];
+        y = data_vec[1][i]*data_vec[1][i];
+        v = sqrt(x+y);
+        mag_vec[i] = v;
+    }
+
+    return mag_vec;
 }
