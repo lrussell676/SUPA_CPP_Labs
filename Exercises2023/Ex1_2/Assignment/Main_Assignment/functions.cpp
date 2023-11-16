@@ -91,7 +91,7 @@ std::vector<double>  calc_magnitude(std::vector<std::vector<double>>&
     return mag_vec;
 }
 
-/* ---- Print condition for vector magnitudes of --------------------------------------------------
+/* ---- Print condition for vector magnitudes of 2D data ------------------------------------------
    --------- Corresponds to: STEPS 2,   Main Assignment -------------------------------------------
    ------------------------- STEPS 5-6, Instructions ------------------------------------------- */
 
@@ -136,4 +136,42 @@ void print_condition_vec_mag(std::vector<double> vec_mag) {
         std::cout << "Ok, the calculated vector magnitudes have just been stored." 
         << std::endl;
    }
+}
+
+/* ---- Least Squares Method Calc -----------------------------------------------------------------
+   --------- Corresponds to: STEPS 3,   Main Assignment (partially) -------------------------------
+   ------------------------- STEPS 7,   Instructions (partially) ---------------------------------- */
+
+std::vector<std::vector<double>> LSM_chi2_xy_data_calc(std::vector<std::vector<double>>
+    data_vec) {
+
+    int n = data_vec[0].size();
+
+    std::vector<double> row(2,0);
+    std::vector<std::vector<double>> LSM_xy_data(n,row);
+
+    double sum_xy, sum_x, sum_y, sum_xx;
+
+    for (int i=0; i<n; i++) {
+        sum_x += data_vec[0][i];
+        sum_y += data_vec[1][i];
+        sum_xx += (data_vec[0][i]*data_vec[0][i]);
+        sum_xy += data_vec[0][i]*data_vec[1][i];
+    }
+
+    double p = ( ((n*sum_xy)-(sum_x*sum_y)) / \
+                 ((n*sum_xx)-(sum_x*sum_x)) );
+    
+    double q = ( ((sum_xx*sum_y)-(sum_xy*sum_x)) / \
+                 ((n*sum_xx)-(sum_x*sum_x)) );
+
+    for (int i=0; i<n; i++) {
+        LSM_xy_data[0][i] = data_vec[0][i];
+        LSM_xy_data[1][i] = (p*data_vec[0][i] + q);
+        std::cout << LSM_xy_data[0][i] << " " << LSM_xy_data[1][i] << std::endl; 
+    }
+    
+    std::cout << "HERE?" << std::endl;
+
+    return LSM_xy_data;
 }

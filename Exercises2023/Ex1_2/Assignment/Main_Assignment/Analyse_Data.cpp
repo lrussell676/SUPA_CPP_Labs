@@ -41,5 +41,8 @@ int main() {
 
    print_condition_vec_mag(mag_1D_vec);
 
+   /* ---- Main Assignment, STEP 3. Instructions, STEPS 7 -------------------- */
 
+   std::vector<std::vector<double>> LSM_xy_data;
+   LSM_xy_data = LSM_chi2_xy_data_calc(input_2D_xy_data);
 }
