@@ -21,13 +21,12 @@
 
 int main() {
 
-   std::string input2D = opening_message();
+   std::string input_path = opening_message();
 
    /* ---- Main Assignment, STEP 1. Instructions, STEPS 1-3 ------------------ */
 
    std::vector<std::vector<double>> input_2D_xy_data;
-   
-   input_2D_xy_data = read_data_from_file(input2D);
+   input_2D_xy_data = read_data_from_file(input_path);
 
    std::cout << "(x,y) data points now contained in 2D vector \"input_2D_xy_data\".\n" \
    << std::endl;
@@ -44,5 +43,7 @@ int main() {
    /* ---- Main Assignment, STEP 3. Instructions, STEPS 7 -------------------- */
 
    std::vector<std::vector<double>> LSM_xy_data;
-   LSM_xy_data = LSM_chi2_xy_data_calc(input_2D_xy_data);
+   LSM_xy_data = LSM_chi2_xy_data_calc(input_2D_xy_data); //seg_fault here
+   
+   return 0;
 }

@@ -8,10 +8,10 @@
 
 std::string opening_message() {
 
-    std::string input2D = "/workspaces/SUPA_CPP_Labs/Exercises2023/Ex1_2/input2D_float.txt";
+    std::string input_path = "/workspaces/SUPA_CPP_Labs/Exercises2023/Ex1_2/input2D_float.txt";
 
     std::cout << "Hello!\nThis script is designed to auto import 2D data by default from:\n" << \
-    input2D << "\nWould you like to change this path? (type \"y\" only to change,\n" \
+    input_path << "\nWould you like to change this path? (type \"y\" only to change,\n" \
     "or enter any other key to continue with default path)." << std::endl;
     
     std::string in;
@@ -19,13 +19,13 @@ std::string opening_message() {
 
     if (in == "y") {
         std::cout << "Ok, please type the desired path:" << std::endl;
-        std::cin >> input2D;
+        std::cin >> input_path;
         std::cout << "Ok, will now attempt to use input data from path:\n" << \
-        input2D << std::endl;
+        input_path << std::endl;
     } else {
         std::cout << "Ok, using default path...." << std::endl;
     }
-    return input2D;
+    return input_path;
 }
 
 /* ---- STEP 3 FROM INSTRUCTIONS --------------------------------------------------------------- */
