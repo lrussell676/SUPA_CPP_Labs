@@ -42,8 +42,13 @@ int main() {
 
    /* ---- Main Assignment, STEP 3. Instructions, STEPS 7 -------------------- */
 
-   std::vector<std::vector<double>> LSM_xy_data;
-   LSM_xy_data = LSM_chi2_xy_data_calc(input_2D_xy_data); //seg_fault here
+   print_message_LSM_chi2();
+
+   double p, q, chi2;
    
-   return 0;
+   std::vector<std::vector<double>> LSM_xy_data;
+   LSM_xy_data = LSM_chi2_xy_data_calc(input_2D_xy_data, p, q, chi2);
+   
+   std::cout << p << " : " << q << " : "  << chi2 << std::endl;
+
 }

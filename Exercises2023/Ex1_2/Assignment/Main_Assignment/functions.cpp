@@ -11,7 +11,7 @@
 
 
 std::vector<std::vector<double>> read_data_from_file(
-    std::string file_location) {
+    std::string file_location, int print_flag = 1) {
 
     std::vector<std::vector<double>> input_data_read_in(2);
     std::ifstream datafile;
@@ -27,19 +27,21 @@ std::vector<std::vector<double>> read_data_from_file(
     }
    
     std::cout << "Path to datafile being read: \n" << file_location << std::endl; 
+    if (print_flag) {
     std::cout << "The lines read-in from the datafile will be printed " \
     "to this terminal in raw format (plain text)." << std::endl;
     do {
         std::cout << "Press Enter to continue..." << std::endl;
     } while (std::cin.get() != '\n');
     std::cin.get();
+    }
    
     while ( !datafile.eof() ){
         if ( !datafile.eof() ){
             filelength++;
             getline(datafile, line);
             std::stringstream ss(line);
-            std::cout << line << std::endl;
+            if (print_flag) {std::cout << line << std::endl;}
             int axis_count = 0;
             while (getline( ss, field, ',')) {
                 std::stringstream fs( field );
@@ -61,8 +63,10 @@ std::vector<std::vector<double>> read_data_from_file(
         } 
     }
 
+   if (print_flag) {
    std::cout << "Number of lines read from file: " << filelength << std::endl;
    std::cout << "Number of (x,y) data points returned: " << data_point_count << std::endl;
+   }
    datafile.close();
 
    return input_data_read_in;
@@ -89,53 +93,7 @@ std::vector<double>  calc_magnitude(std::vector<std::vector<double>>&
     }
 
     return mag_vec;
-}
 
-/* ---- Print condition for vector magnitudes of 2D data ------------------------------------------
-   --------- Corresponds to: STEPS 2,   Main Assignment -------------------------------------------
-   ------------------------- STEPS 5-6, Instructions ------------------------------------------- */
-
-void print_condition_vec_mag(std::vector<double> vec_mag) {
-    std::cout << "\nAfter calculating the magnitude of these vectors, would you like " \
-   "these \nprinted to the terminal as well? (type \"y\" for yes, or " \
-   "enter any other \nkey to continue with calculation only)."
-   << std::endl;
-
-   std::string in;
-   std::cin >> in;
-
-   int n;
-
-   if (in == "y") {
-      std::cout << "Ok, here are the calculated vector magnitudes. But first,\n" \
-      "Please specify an INTEGER value of lines " \
-      "you wish to print:" << std::endl;
-      std::cin >> n;
-      if ( n > vec_mag.size() ) {
-         std::cout << "WARNING: your value of \'n\' is larger than the number " \
-         "of data points within this vector. \nOnly the first 5 data points " \
-         "will be printed to the terminal." << std::endl;
-         do {
-            std::cout << "Press Enter to continue..." << std::endl;
-         } while (std::cin.get() != '\n');
-         std::cin.get();
-         n = 5;
-         for (int i=0; i<n; i++) {
-            std::cout << vec_mag[i] << std::endl;
-         }
-      } else {
-         std::cout << "Ok, " << n << " vector magnitudes will now sequentially be " \
-        "printed to the terminal." << std::endl;
-        do {
-            std::cout << "Press Enter to continue..." << std::endl;
-        } while (std::cin.get() != '\n');
-        std::cin.get();
-         print_mag_calc(vec_mag,n);
-      }
-   } else {
-        std::cout << "Ok, the calculated vector magnitudes have just been stored." 
-        << std::endl;
-   }
 }
 
 /* ---- Least Squares Method Calc -----------------------------------------------------------------
@@ -143,12 +101,14 @@ void print_condition_vec_mag(std::vector<double> vec_mag) {
    ------------------------- STEPS 7,   Instructions (partially) ---------------------------------- */
 
 std::vector<std::vector<double>> LSM_chi2_xy_data_calc(std::vector<std::vector<double>>
-    data_vec) {
+    data_vec, double& p, double& q, double& chi2) {
 
    int n = data_vec[0].size();
 
-   std::vector<double> row(2,0);
-   std::vector<std::vector<double>> LSM_xy_data(n,row);
+   std::vector<double> row(n,0);
+   std::vector<std::vector<double>> LSM_xy_data(2,row);
+
+   /* ---- Least Squares Method -------------------------- */
 
    double sum_xy, sum_x, sum_y, sum_xx;
 
@@ -159,22 +119,51 @@ std::vector<std::vector<double>> LSM_chi2_xy_data_calc(std::vector<std::vector<d
       sum_xy += data_vec[0][i]*data_vec[1][i];
    }
 
-   double p = ( ((n*sum_xy)-(sum_x*sum_y)) / \
+   p = ( ((n*sum_xy)-(sum_x*sum_y)) / \
                 ((n*sum_xx)-(sum_x*sum_x)) );
     
-   double q = ( ((sum_xx*sum_y)-(sum_xy*sum_x)) / \
+   q = ( ((sum_xx*sum_y)-(sum_xy*sum_x)) / \
                 ((n*sum_xx)-(sum_x*sum_x)) );
 
    for (int i=0; i<n; i++) {
       LSM_xy_data[0][i] = data_vec[0][i];
       LSM_xy_data[1][i] = (p*data_vec[0][i] + q); 
    }
-    
-   for (int i=0; i<n; i++) {
-        std::cout << LSM_xy_data[0][i] << " " << LSM_xy_data[1][i] << std::endl;
+
+   /* ---- Chi**2 ---------------------------------------- */
+
+   std::string error_path = LSM_chi2_error_file_path();
+
+   std::vector<std::vector<double>> error_data;
+   error_data = read_data_from_file(error_path, 0/*print_flag*/);
+
+   //for (int i=0; i<n; i++) {
+   //     std::cout << error_data[0][i] << " " << error_data[1][i] << std::endl;
+   //}
+
+   /* observed */
+   double obs_i;
+   /* expected */
+   double exp_i;
+
+   for (int j=0; j<2; j++) {
+      for (int i=0; i<n; i++) {
+         obs_i = (data_vec[j][i] - LSM_xy_data[j][i]) ;
+         exp_i = error_data[j][i];
+         chi2 += ( (( obs_i - exp_i )* \
+                    ( obs_i - exp_i )) / \
+                  //  ( exp_i*exp_i )) ;
+                    ( exp_i )) ;
+      }
    }
 
-   std::cout << "HERE?" << std::endl;
+   chi2 = chi2/(2*n) ;
+
+   std::cout << chi2 << std::endl;
+    
+   //for (int i=0; i<n; i++) {
+   //     std::cout << LSM_xy_data[0][i] << " " << LSM_xy_data[1][i] << std::endl;
+   //}
 
    return LSM_xy_data;
 }
