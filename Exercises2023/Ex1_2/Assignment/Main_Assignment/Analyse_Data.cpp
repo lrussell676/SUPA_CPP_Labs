@@ -76,7 +76,7 @@ int main() {
 
    while(op != 'x'){
       std::cout << "Please select write to file options: " << std::endl;
-      std::cout << "1 ---> All Data" << std::endl;
+      std::cout << "1 ---> All Calculated Data" << std::endl;
       std::cout << "2 ---> Magnitude of Vectors Data Only" << std::endl;
       std::cout << "3 ---> LSM and Chi-squared Data Only" << std::endl;
       std::cout << "4 ---> (x**y) Data Only" << std::endl;
@@ -86,22 +86,54 @@ int main() {
 
       switch(op){
          case '1':
-            std::cout << "case 1" << std::endl;
+            /* --- Magnitude of Vectors Write to File -------------------- */
+            output_file_path = "./output_vector_mags.txt";
+            std::cout << "\nVector Magnitudes being saved to \"./output_vector_mags.txt\"" \
+            << std::endl;
+            write_to_file(output_file_path, mag_1D_vec);
+            /* --- LSM and Chi-squared Data Write to File ---------------- */
+            output_file_path = "./output_stats_LSM_Chi2.txt";
+            std::cout << "\nLSM and Chi-squared Data being saved to" \
+                      << "\"./output_stats_LSM_Chi2.txt\"" << std::endl;
+            write_to_file(output_file_path, LSM_xy_data, p, q, chi2);
+            /* --- (x**y) Write to File ---------------------------------- */
+            output_file_path = "./output_x_pow_y.txt";
+            std::cout << "\n\"x**y\" Calculations being saved to \"./output_x_pow_y.txt\"" \
+            << std::endl;
+            write_to_file(output_file_path, x_pow_y_1D_vec);
             break;
+
          case '2':
-            std::cout << "case 2" << std::endl;
+            /* --- Magnitude of Vectors Write to File -------------------- */
+            output_file_path = "./output_vector_mags.txt";
+            std::cout << "\nVector Magnitudes being saved to \"./output_vector_mags.txt\"" \
+            << std::endl;
+            write_to_file(output_file_path, mag_1D_vec);
             break;
+
          case '3':
-            std::cout << "case 3" << std::endl;
+            /* --- LSM and Chi-squared Data Write to File ---------------- */
+            output_file_path = "./output_stats_LSM_Chi2.txt";
+            std::cout << "\nLSM and Chi-squared Data being saved to" \
+                      << "\"./output_stats_LSM_Chi2.txt\"" << std::endl;
+            write_to_file(output_file_path, LSM_xy_data, p, q, chi2);
             break;
+
          case '4':
-            std::cout << "case 4" << std::endl;
+            /* --- (x**y) Write to File ---------------------------------- */
+            output_file_path = "./output_x_pow_y.txt";
+            std::cout << "\n\"x**y\" Calculations being saved to \"./output_x_pow_y.txt\"" \
+            << std::endl;
+            write_to_file(output_file_path, x_pow_y_1D_vec);
             break;
+
          case 'x':
             std::cout << "Ok, Exiting Program....." << std::endl;
             exit(1);
+
          default:
-            std::cout << "ERROR: Unexpected Input: " << op << ":" << int(op) << std::endl;
+            std::cout << "\nERROR: Unexpected Input: " << op << ":" << int(op) << \
+            "\n" << std::endl;
             continue;
       }
    }

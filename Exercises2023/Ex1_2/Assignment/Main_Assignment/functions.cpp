@@ -96,9 +96,9 @@ std::vector<double>  calc_magnitude(std::vector<std::vector<double>>&
 
 }
 
-/* ---- Least Squares Method Calc -----------------------------------------------------------------
+/* ---- Least Squares Method and Chi-squared Calc -------------------------------------------------
    --------- Corresponds to: STEPS 3,   Main Assignment (partially) -------------------------------
-   ------------------------- STEPS 7,   Instructions (partially) ---------------------------------- */
+   ------------------------- STEPS 7,   Instructions (partially) ------------------------------- */
 
 std::vector<std::vector<double>> LSM_chi2_xy_data_calc(std::vector<std::vector<double>>
     data_vec, double& p, double& q, double& chi2) {
@@ -189,4 +189,59 @@ std::vector<double>  x_pow_y_calc(std::vector<std::vector<double>>&
 
     return x_pow_y;
 
+}
+
+/* ---- Handles writting data to files ------------------------------------------------------------
+   --------- Corresponds to: STEPS 5,   Main Assignment -------------------------------------------
+   ------------------------- STEPS 11-12,  Instructions ---------------------------------------- */
+
+/* 1D Vector Write to File */
+void write_to_file(std::string file_write_path, std::vector<double>&);
+void write_to_file(std::string file_write_path, std::vector<double>& data_vec_1D) {
+
+   std::ofstream file_out;
+
+   file_out.open(file_write_path);
+
+   if (file_out.fail()) {
+      std::cout << "ERROR: Cound not open or write to file.\n" << std::endl;
+   } else {
+      int n = data_vec_1D.size();
+      for (int i=0; i<n; i++) {
+         file_out << data_vec_1D[i] << std::endl;
+      }
+   file_out.close();
+   std::cout << "Successful write to file!\n" << std::endl;
+   }
+
+}
+
+/* 2D Vector Write to File */
+void write_to_file(std::string file_write_path, std::vector<std::vector<double>>&, \
+                  double&, double&, double&);
+void write_to_file(std::string file_write_path, std::vector<std::vector<double>>& \
+                  data_vec_2D, double& p, double& q, double& chi2) {
+
+   std::ofstream file_out;
+
+   file_out.open(file_write_path);
+
+   if (file_out.fail()) {
+      std::cout << "ERROR: Cound not open or write to file.\n" << std::endl;
+   } else {
+
+      file_out << "LSM Equation of Line: y = " << p <<"x + " << q << std::endl;
+      file_out << "Chi-Squared = " << chi2 << std::endl;
+      file_out << "\nLSM Data Points (x \\t \\t y):\n" <<std::endl;
+
+      int n = data_vec_2D[1].size();
+
+      for (int i=0; i<n; i++) {
+         file_out << data_vec_2D[0][i] << "\t\t" << data_vec_2D[1][i] << std::endl;
+      }
+
+   file_out.close();
+   std::cout << "Successful write to file!\n" << std::endl;
+   }
+   
 }
