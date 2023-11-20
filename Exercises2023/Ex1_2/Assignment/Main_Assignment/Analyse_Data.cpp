@@ -40,7 +40,7 @@ int main() {
 
    print_condition_vec_mag(mag_1D_vec);
 
-   /* ---- Main Assignment, STEP 3. Instructions, STEPS 7 -------------------- */
+   /* ---- Main Assignment, STEP 3. Instructions, STEPS 7-9 ------------------ */
 
    print_message_LSM_chi2();
 
@@ -50,5 +50,10 @@ int main() {
    LSM_xy_data = LSM_chi2_xy_data_calc(input_2D_xy_data, p, q, chi2);
    
    std::cout << p << " : " << q << " : "  << chi2 << std::endl;
+
+   /* ---- Main Assignment, STEP 4. Instructions, STEPS 10 ------------------- */
+
+   std::vector<double> x_pow_y_1D_vec;
+   x_pow_y_1D_vec = x_pow_y_calc(input_2D_xy_data);
 
 }

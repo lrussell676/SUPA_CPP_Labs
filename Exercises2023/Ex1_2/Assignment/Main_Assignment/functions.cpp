@@ -86,10 +86,10 @@ std::vector<double>  calc_magnitude(std::vector<std::vector<double>>&
     double x, y, v;
 
     for (int i=0; i<n; i++) {
-        x = data_vec[0][i]*data_vec[0][i];
-        y = data_vec[1][i]*data_vec[1][i];
-        v = sqrt(x+y);
-        mag_vec[i] = v;
+      x = data_vec[0][i]*data_vec[0][i];
+      y = data_vec[1][i]*data_vec[1][i];
+      v = sqrt(x+y);
+      mag_vec[i] = v;
     }
 
     return mag_vec;
@@ -166,4 +166,27 @@ std::vector<std::vector<double>> LSM_chi2_xy_data_calc(std::vector<std::vector<d
    //}
 
    return LSM_xy_data;
+}
+
+/* ---- Calculates magnitude of 2D vectors as ((0,0),(x,y)) ---------------------------------------
+   --------- Corresponds to: STEPS 4,   Main Assignment -------------------------------------------
+   ------------------------- STEPS 10,  Instructions ------------------------------------------- */
+
+std::vector<double>  x_pow_y_calc(std::vector<std::vector<double>>& 
+    data_vec) {
+
+    int n = data_vec[0].size();
+    std::vector<double> x_pow_y(n);
+
+    double x, y, v;
+
+    for (int i=0; i<n; i++) {
+      x = data_vec[0][i]*data_vec[0][i];
+      y = data_vec[1][i]*data_vec[1][i];
+      v = sqrt(x+y);
+      x_pow_y[i] = v;
+    }
+
+    return x_pow_y;
+
 }
