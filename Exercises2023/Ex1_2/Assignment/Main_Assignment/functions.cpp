@@ -157,13 +157,12 @@ std::vector<std::vector<double>> LSM_chi2_xy_data_calc(std::vector<std::vector<d
       }
    }
 
-   chi2 = chi2/(2*n) ;
+   chi2 = chi2/(2*n);
 
-   std::cout << chi2 << std::endl;
-    
-   //for (int i=0; i<n; i++) {
-   //     std::cout << LSM_xy_data[0][i] << " " << LSM_xy_data[1][i] << std::endl;
-   //}
+   std::cout << "\n\\* -------- LSM,Chi**2 Results -------- *\\" << std::endl;
+   std::cout << "LSM Eq of Line: y = " << p <<"x + " << q << std::endl;
+   std::cout << "Chi-Squared = " << chi2 << std::endl;
+   std::cout << "\\* ------------------------------------ *\\\n" << std::endl;
 
    return LSM_xy_data;
 }
@@ -178,13 +177,14 @@ std::vector<double>  x_pow_y_calc(std::vector<std::vector<double>>&
     int n = data_vec[0].size();
     std::vector<double> x_pow_y(n);
 
-    double x, y, v;
+    double x, y, y_int, pow;
 
     for (int i=0; i<n; i++) {
-      x = data_vec[0][i]*data_vec[0][i];
-      y = data_vec[1][i]*data_vec[1][i];
-      v = sqrt(x+y);
-      x_pow_y[i] = v;
+      x = data_vec[0][i];
+      y = std::round(data_vec[1][i]);
+      y_int = int(y);
+      pow = exp(y*log(x));
+      x_pow_y[i] = pow;
     }
 
     return x_pow_y;

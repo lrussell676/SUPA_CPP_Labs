@@ -48,12 +48,62 @@ int main() {
    
    std::vector<std::vector<double>> LSM_xy_data;
    LSM_xy_data = LSM_chi2_xy_data_calc(input_2D_xy_data, p, q, chi2);
-   
-   std::cout << p << " : " << q << " : "  << chi2 << std::endl;
 
    /* ---- Main Assignment, STEP 4. Instructions, STEPS 10 ------------------- */
 
+   print_message_x_pow_y();
+
    std::vector<double> x_pow_y_1D_vec;
    x_pow_y_1D_vec = x_pow_y_calc(input_2D_xy_data);
+
+   std::cout << "The values of \"x**y\" now contained in 1D vector \"x_pow_y_1D_vec\".\n" \
+   << std::endl;
+
+   /* ---- Main Assignment, STEP 5. Instructions, STEPS 11-12----------------- */
+
+   std::cout << "\\* -------------------------------------------------------------------\n" << \
+                "--------------------- All Calculations Completed ---------------------\n" << \
+                "------------------------------------------------------------------- *\\" << \
+                std::endl;
+
+   std::cout << "\nThe program can either now be terminated, or calculated data can be\n" \
+                "written to .txt file outputs. The files will be written to the relative\n" \
+                "path associated to this program directory using the format:\n" \
+                "\"./output_*.txt\"\n\n" << std::endl;
+
+   char op;
+   std::string output_file_path;
+
+   while(op != 'x'){
+      std::cout << "Please select write to file options: " << std::endl;
+      std::cout << "1 ---> All Data" << std::endl;
+      std::cout << "2 ---> Magnitude of Vectors Data Only" << std::endl;
+      std::cout << "3 ---> LSM and Chi-squared Data Only" << std::endl;
+      std::cout << "4 ---> (x**y) Data Only" << std::endl;
+      std::cout << "x ---> Exit Program" << std::endl;
+
+      std::cin >> op;
+
+      switch(op){
+         case '1':
+            std::cout << "case 1" << std::endl;
+            break;
+         case '2':
+            std::cout << "case 2" << std::endl;
+            break;
+         case '3':
+            std::cout << "case 3" << std::endl;
+            break;
+         case '4':
+            std::cout << "case 4" << std::endl;
+            break;
+         case 'x':
+            std::cout << "Ok, Exiting Program....." << std::endl;
+            exit(1);
+         default:
+            std::cout << "ERROR: Unexpected Input: " << op << ":" << int(op) << std::endl;
+            continue;
+      }
+   }
 
 }

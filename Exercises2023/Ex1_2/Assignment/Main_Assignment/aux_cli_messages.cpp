@@ -150,3 +150,16 @@ std::string LSM_chi2_error_file_path(){
     }
     return input_path;
 }
+
+/* ---- STEPS 4 MAIN ASSIGNMENT ---------------------------------------------------------------- */
+
+void print_message_x_pow_y() {
+
+    std::cout << "The values of \"x**y\" will now be calculated from the input data." << std::endl;
+
+    do {
+        std::cout << "Press Enter to continue..." << std::endl;
+    } while (std::cin.get() != '\n');
+    std::cin.get();
+
+}
