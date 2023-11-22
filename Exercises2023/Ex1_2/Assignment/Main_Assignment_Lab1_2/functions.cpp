@@ -146,9 +146,8 @@ std::vector<std::vector<double>> LSM_chi2_xy_data_calc(std::vector<std::vector<d
    for (int j=0; j<2; j++) {
       for (int i=0; i<n; i++) {
          top_i = (data_vec[j][i] - LSM_xy_data[j][i]);
-         //std::cout << data_vec[j][i] << std::endl;
          bot_i = error_data[j][i];
-         if (j=0) {
+         if (j==0) {
             bot_2 = p*error_data[1][i];
          } else {
             bot_2 = p*error_data[0][i];

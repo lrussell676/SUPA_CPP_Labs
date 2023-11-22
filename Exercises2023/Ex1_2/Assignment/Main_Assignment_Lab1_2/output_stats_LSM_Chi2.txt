@@ -1,5 +1,5 @@
 LSM Equation of Line: y = 0.126266x + 2.02628
-Chi-Squared = 32968.5
+Chi-Squared = 128.227
 
 LSM Data Points (x \t \t y):
 
