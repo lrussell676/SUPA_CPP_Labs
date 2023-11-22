@@ -158,7 +158,7 @@ std::vector<std::vector<double>> LSM_chi2_xy_data_calc(std::vector<std::vector<d
       }
    }
 
-   chi2 = chi2/(n-2); /* CHI**2 WITH DOF FACTOR */
+   chi2 = chi2/(n-data_vec.size()); /* CHI**2 WITH DOF FACTOR */
 
    std::cout << "\n\\* -------- LSM,Chi**2 Results -------- *\\" << std::endl;
    std::cout << "LSM Eq of Line: y = " << p <<"x + " << q << std::endl;
