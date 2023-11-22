@@ -97,8 +97,8 @@ std::vector<double>  calc_magnitude(std::vector<std::vector<double>>&
 }
 
 /* ---- Least Squares Method and Chi-squared Calc -------------------------------------------------
-   --------- Corresponds to: STEPS 3,   Main Assignment (partially) -------------------------------
-   ------------------------- STEPS 7,   Instructions (partially) ------------------------------- */
+   --------- Corresponds to: STEPS 3,   Main Assignment -------------------------------------------
+   ------------------------- STEPS 7,   Instructions ------------------------------------------- */
 
 std::vector<std::vector<double>> LSM_chi2_xy_data_calc(std::vector<std::vector<double>>
     data_vec, double& p, double& q, double& chi2) {
@@ -137,27 +137,29 @@ std::vector<std::vector<double>> LSM_chi2_xy_data_calc(std::vector<std::vector<d
    std::vector<std::vector<double>> error_data;
    error_data = read_data_from_file(error_path, 0/*print_flag*/);
 
-   //for (int i=0; i<n; i++) {
-   //     std::cout << error_data[0][i] << " " << error_data[1][i] << std::endl;
-   //}
+   /* Numerator (Top) ---- */
+   double top_i;
+   /* Denominator (Bottom) */
+   double bot_i, bot_2;
 
-   /* observed */
-   double obs_i;
-   /* expected */
-   double exp_i;
-
+   /* THIS LOOP FOR CHI**2 WITHOUT DOF */
    for (int j=0; j<2; j++) {
       for (int i=0; i<n; i++) {
-         obs_i = (data_vec[j][i] - LSM_xy_data[j][i]) ;
-         exp_i = error_data[j][i];
-         chi2 += ( (( obs_i - exp_i )* \
-                    ( obs_i - exp_i )) / \
-                  //  ( exp_i*exp_i )) ;
-                    ( exp_i )) ;
+         top_i = (data_vec[j][i] - LSM_xy_data[j][i]);
+         //std::cout << data_vec[j][i] << std::endl;
+         bot_i = error_data[j][i];
+         if (j=0) {
+            bot_2 = p*error_data[1][i];
+         } else {
+            bot_2 = p*error_data[0][i];
+         }
+         chi2 += ( (( top_i )* \
+                    ( top_i )) / \
+                    ( (bot_i*bot_i)+(bot_2*bot_2) ));
       }
    }
 
-   chi2 = chi2/(2*n);
+   chi2 = chi2/(n-2); /* CHI**2 WITH DOF FACTOR */
 
    std::cout << "\n\\* -------- LSM,Chi**2 Results -------- *\\" << std::endl;
    std::cout << "LSM Eq of Line: y = " << p <<"x + " << q << std::endl;
@@ -171,21 +173,27 @@ std::vector<std::vector<double>> LSM_chi2_xy_data_calc(std::vector<std::vector<d
    --------- Corresponds to: STEPS 4,   Main Assignment -------------------------------------------
    ------------------------- STEPS 10,  Instructions ------------------------------------------- */
 
+void Recursive_x_pow_y (std::vector<std::vector<double>>& 
+    data_vec, std::vector<double>& x_pow_y, int& n) {
+
+    n -= 1;
+    double x = data_vec[0][n];
+    double y = std::round(data_vec[1][n]);
+    int y_int = int(y);
+    x_pow_y[n] = exp(y*log(x));
+
+    if (n > 0) {
+      return Recursive_x_pow_y(data_vec, x_pow_y, n);
+    }
+}
+
 std::vector<double>  x_pow_y_calc(std::vector<std::vector<double>>& 
     data_vec) {
 
     int n = data_vec[0].size();
     std::vector<double> x_pow_y(n);
 
-    double x, y, y_int, pow;
-
-    for (int i=0; i<n; i++) {
-      x = data_vec[0][i];
-      y = std::round(data_vec[1][i]);
-      y_int = int(y);
-      pow = exp(y*log(x));
-      x_pow_y[i] = pow;
-    }
+    Recursive_x_pow_y(data_vec, x_pow_y, n);
 
     return x_pow_y;
 
