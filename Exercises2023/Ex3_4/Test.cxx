@@ -6,8 +6,6 @@
 
 #include "gnuplot-iostream.h" //Needed to produce plots (not part of the course) 
 
-using std::filesystem::path;
-
 std::vector<double> read_data_from_file(
     std::string file_location, int print_flag = 1) {
 
@@ -54,14 +52,23 @@ std::vector<double> read_data_from_file(
 
 int main() {
 
+    /* --- Importing Data -------------------- */
     std::string data_path = "Outputs/data/MysteryData03211.txt";
     std::vector<double> points = read_data_from_file(data_path,0);
-    
-    FiniteFunction FinFunc(-5.0,5.0,"Outputs/png/Test_Out.png");
 
-    int n = points.size();
-    std::cout << n << std::endl;
+    /* --- Obtaining min-max Values ---------- */
+    std::vector<double>::iterator m_RMin = \
+        std::min_element(std::begin(points),std::end(points));
+    std::vector<double>::iterator m_RMax = \
+        std::max_element(std::begin(points),std::end(points));
     
-    FinFunc.plotData(points,50);
+    /* --- Initialising FiniteFunctions ------ */
+    FiniteFunction FinFunc(*m_RMin,*m_RMax,"./Outputs/png/MysteryData03211.png");
+
+    //int n = points.size();
+    //std::cout << n << std::endl;
+    
+    FinFunc.plotFunction();
+    FinFunc.plotData(points,100);
 
 }
