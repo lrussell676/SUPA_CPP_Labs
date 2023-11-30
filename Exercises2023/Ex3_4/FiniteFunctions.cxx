@@ -66,7 +66,6 @@ double FiniteFunction::integrate(int Ndiv){ //private
   double integ = 0;
   double step = (m_RMax - m_RMin)/(double)Ndiv;
   for (double i=m_RMin; i<m_RMax; i+=step) {
-    //std::cout << i << std::endl;
     integ += (callFunction(i)*step);
   }
 

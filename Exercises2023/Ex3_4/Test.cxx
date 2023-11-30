@@ -1,10 +1,4 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include "FiniteFunctions.h"
-#include <filesystem> //To check extensions in a nice way
-
-#include "gnuplot-iostream.h" //Needed to produce plots (not part of the course) 
+#include "CustomFunctions.h"
 
 std::vector<double> read_data_from_file(
     std::string file_location, int print_flag = 1) {
@@ -63,11 +57,17 @@ int main() {
         std::max_element(std::begin(points),std::end(points));
     
     /* --- Initialising FiniteFunctions ------ */
-    FiniteFunction FinFunc(*m_RMin,*m_RMax,"./Outputs/png/MysteryData03211.png");
+    FiniteFunction FinFunc(*m_RMin,*m_RMax,"./Outputs/png/InvXsq03211.png");
 
     //int n = points.size();
     //std::cout << n << std::endl;
     
+    FinFunc.plotFunction();
+    FinFunc.plotData(points,100);
+
+    FinFunc(*m_RMin,*m_RMax,"./Outputs/png/NormDist03211.png");
+
+    int *dist_flag = 0;
     FinFunc.plotFunction();
     FinFunc.plotData(points,100);
 
