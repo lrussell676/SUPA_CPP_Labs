@@ -1,6 +1,7 @@
 /* ------------------------------------------------------------------------------------------------
    -------------------------- Author: Lewis Russell : SUPACOO Class Student -----------------------
    --------------------------------------------------------------------------------------------- */
+
 #include <numeric>
 #include "CustomFunctions.h"
 
@@ -39,7 +40,6 @@ int main() {
 
     /* --- Initialising CustomFunctions ---------- */
     /* --- Negative Crystall Ball Distribution --- */
-
     CustomFunction CusFunc3(*m_RMin,*m_RMax,"./Outputs/png/4-nCBDist03211.png");
     CusFunc3.nCB_vars.x_avg = std::reduce(points.begin(), points.end(), 0.0) / points.size();
     CusFunc3.set_nCB_Vars(2.0, 0.5, 1.2);

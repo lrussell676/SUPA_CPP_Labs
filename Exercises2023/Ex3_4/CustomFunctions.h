@@ -12,7 +12,7 @@ class CustomFunction : public FiniteFunction {
 
         CustomFunction();  //Empty Constructor
         CustomFunction(double range_min, \
-        double range_max, std::string outfile); //Variable constructor
+        double range_max, std::string outfile); //Variable Constructor
         ~CustomFunction(); //Empty Deconstructor
 
         std::vector<double> read_data_from_file(

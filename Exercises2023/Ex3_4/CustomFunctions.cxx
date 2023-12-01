@@ -7,7 +7,7 @@
 
 
 CustomFunction::CustomFunction(){};
-//initialised constructor
+//Initialised Constructor
 CustomFunction::CustomFunction(double range_min, double range_max, std::string outfile){
   m_RMin = range_min;
   m_RMax = range_max;
@@ -17,9 +17,9 @@ CustomFunction::CustomFunction(double range_min, double range_max, std::string o
 CustomFunction::~CustomFunction(){};
 
 /*
-###################
+#######################################
 //Data Import
-###################
+#######################################
 */ 
 
 std::vector<double> CustomFunction::read_data_from_file(
@@ -66,9 +66,9 @@ std::vector<double> CustomFunction::read_data_from_file(
 };
 
 /*
-###################
-//Data Import
-###################
+#######################################
+//Set Negative Crystal Ball Parameters
+#######################################
 */ 
 
 void CustomFunction::set_nCB_Vars(double n, double a, double s) {
@@ -86,9 +86,9 @@ void CustomFunction::set_nCB_Vars(double n, double a, double s) {
 }
 
 /*
-###################
+#######################################
 //Distribution Functions
-###################
+#######################################
 */ 
 
 double CustomFunction::normdist(double x) {
@@ -111,9 +111,9 @@ double CustomFunction::nCBdist(double x) {
 };
 
 /*
-###################
-//Function eval
-###################
+#######################################
+//Function Evaluation
+#######################################
 */ 
 
 double CustomFunction::callFunction(double x) {
