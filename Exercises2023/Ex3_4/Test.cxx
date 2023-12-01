@@ -1,74 +1,50 @@
+/* ------------------------------------------------------------------------------------------------
+   -------------------------- Author: Lewis Russell : SUPACOO Class Student -----------------------
+   --------------------------------------------------------------------------------------------- */
+#include <numeric>
 #include "CustomFunctions.h"
-
-std::vector<double> read_data_from_file(
-    std::string file_location, int print_flag = 1) {
-
-    std::vector<double> input_data_read_in;
-    std::ifstream datafile;
-    std::string line;
-    std::string field;
-    int filelength = 0;
-
-    datafile.open(file_location);
-    if (datafile.fail() ) {
-      std::cout << "ERROR: Could not open datafile." << std::endl;
-      exit(1);
-    }
-   
-    std::cout << "Path to datafile being read: \n" << file_location << std::endl; 
-    if (print_flag) {
-    std::cout << "The lines read-in from the datafile will be printed " \
-    "to this terminal in raw format (plain text)." << std::endl;
-    do {
-        std::cout << "Press Enter to continue..." << std::endl;
-    } while (std::cin.get() != '\n');
-    std::cin.get();
-    }
-   
-    while (getline(datafile, line)) {
-        filelength++;
-        std::stringstream ss(line);
-        double f; 
-        ss >> f;
-        input_data_read_in.push_back(f);
-        if (print_flag) {std::cout << line << std::endl;}
-    } 
-    
-
-   if (print_flag) {
-   std::cout << "Number of lines read from file: " << filelength << "\n" << std::endl;
-   }
-   datafile.close();
-
-   return input_data_read_in;
-
-}
 
 int main() {
 
-    /* --- Importing Data -------------------- */
+    /* --- Importing Data ------------------------ */
     std::string data_path = "Outputs/data/MysteryData03211.txt";
-    std::vector<double> points = read_data_from_file(data_path,0);
+    CustomFunction CusFunc;
+    std::vector<double> points = CusFunc.read_data_from_file(data_path,0);
 
-    /* --- Obtaining min-max Values ---------- */
+    /* --- Obtaining min-max Values -------------- */
     std::vector<double>::iterator m_RMin = \
         std::min_element(std::begin(points),std::end(points));
     std::vector<double>::iterator m_RMax = \
         std::max_element(std::begin(points),std::end(points));
     
-    /* --- Initialising FiniteFunctions ------ */
-    FiniteFunction FinFunc(*m_RMin,*m_RMax,"./Outputs/png/InvXsq03211.png");
+    /* --- Initialising FiniteFunctions ---------- */
+    /* --- Inverse x-Squared --------------------- */
+    FiniteFunction FinFunc1(*m_RMin,*m_RMax,"./Outputs/png/1-InvXsq03211.png");
+    FinFunc1.plotFunction();
+    FinFunc1.plotData(points,100);
 
-    //int n = points.size();
-    //std::cout << n << std::endl;
-    
-    FinFunc.plotFunction();
-    FinFunc.plotData(points,100);
+    /* --- Initialising CustomFunctions ---------- */
+    /* --- Normal Distribution ------------------- */
+    CustomFunction CusFunc1(*m_RMin,*m_RMax,"./Outputs/png/2-NormDist03211.png");
+    CusFunc1.dist_flag = 0;
+    CusFunc1.plotFunction();
+    CusFunc1.plotData(points,100);
 
-    FinFunc(*m_RMin,*m_RMax,"./Outputs/png/NormDist03211.png");
+    /* --- Initialising CustomFunctions ---------- */
+    /* --- Cauchy-Lorentz Distribution ----------- */
+    CustomFunction CusFunc2(*m_RMin,*m_RMax,"./Outputs/png/3-CLDist03211.png");
+    CusFunc2.dist_flag = 1;
+    CusFunc2.plotFunction();
+    CusFunc2.plotData(points,100);
 
-    int *dist_flag = 0;
-    FinFunc.plotFunction();
-    FinFunc.plotData(points,100);
+    /* --- Initialising CustomFunctions ---------- */
+    /* --- Negative Crystall Ball Distribution --- */
+
+    CustomFunction CusFunc3(*m_RMin,*m_RMax,"./Outputs/png/4-nCBDist03211.png");
+    CusFunc3.nCB_vars.x_avg = std::reduce(points.begin(), points.end(), 0.0) / points.size();
+    CusFunc3.set_nCB_Vars(2.0, 0.5, 1.2);
+    CusFunc3.dist_flag = 2;
+    CusFunc3.plotFunction();
+    CusFunc3.plotData(points,100);
 
 }
