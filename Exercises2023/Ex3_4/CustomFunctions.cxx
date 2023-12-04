@@ -100,7 +100,7 @@ double CustomFunction::normdist(double x) {
 };
 
 double CustomFunction::CLdist(double x) {
-    // Gamma = 1, x_0 = 1
+    // Gamma = 2, x_0 = 1
     return (1.0/(M_PI*2.0*(1.0+(((x-1.0)/2.0)*((x-1.0)/2.0)))));
 };
 
@@ -140,12 +140,9 @@ double CustomFunction::callFunction(double x) {
 
 double CustomFunction::Mstep(double x_old, double delta_min, double delta_max) {
 
-    //std::random_device dev;
-    //std::mt19937 rng(dev());
-    std::default_random_engine rng;
+    std::random_device dev;
+    std::mt19937 rng(dev());
     std::uniform_real_distribution<double> distA(delta_min,delta_max);
-
-    //std::cout << distA(rng) << std::endl;
 
     double x_trial = x_old + distA(rng);
 

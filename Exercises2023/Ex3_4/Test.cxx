@@ -74,9 +74,9 @@ int main() {
     std::cout << "Calculating Metropolis Algorithms. This takes a moment...." << std::endl;
 
     for (int i=0; i<sample_data_size; i++) {
-        Msteps_pts_ND[i+1] = CusFunc1.Mstep(Msteps_pts_ND[i], *m_RMin, *m_RMax);
-        Msteps_pts_CL[i+1] = CusFunc2.Mstep(Msteps_pts_CL[i], *m_RMin, *m_RMax);
-        Msteps_pts_nCB[i+1] = CusFunc3.Mstep(Msteps_pts_nCB[i], *m_RMin, *m_RMax);
+        Msteps_pts_ND[i+1] = CusFunc1.Mstep(Msteps_pts_ND[i]);
+        Msteps_pts_CL[i+1] = CusFunc2.Mstep(Msteps_pts_CL[i]);
+        Msteps_pts_nCB[i+1] = CusFunc3.Mstep(Msteps_pts_nCB[i]);
     }
 
     CusFunc1.plotData(Msteps_pts_ND,100,false);
