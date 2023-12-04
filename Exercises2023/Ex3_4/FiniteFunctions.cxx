@@ -62,13 +62,12 @@ Integration by hand (output needed to normalise function when plotting)
 ###################
 */ 
 double FiniteFunction::integrate(int Ndiv){ //private
-  //ToDo write an integrator
+  //Integration Steps
   double integ = 0;
   double step = (m_RMax - m_RMin)/(double)Ndiv;
   for (double i=m_RMin; i<m_RMax; i+=step) {
     integ += (callFunction(i)*step);
   }
-
   return integ;  
 }
 double FiniteFunction::integral(int Ndiv) { //public

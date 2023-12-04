@@ -69,26 +69,6 @@ std::vector<double> CustomFunction::read_data_from_file(
 
 /*
 #######################################
-//Set Negative Crystal Ball Parameters
-#######################################
-*/ 
-
-void CustomFunction::set_nCB_Vars(double n, double a, double s) {
-
-    nCB_vars.n = n;
-    nCB_vars.a = a;
-    nCB_vars.s = s;
-
-    nCB_vars.A = (pow((n/a),n))*exp(-((a*a)/2));
-    nCB_vars.B = (n/a)-a;
-    nCB_vars.C = (n/a)*(1/(n-1))*exp(-((a*a)/2));
-    nCB_vars.D = sqrt(M_PI_2)*(1+std::erf(a/1.4142135624));
-    nCB_vars.N = 1/(s*(nCB_vars.C+nCB_vars.D));
-
-}
-
-/*
-#######################################
 //Distribution Functions
 #######################################
 */ 
@@ -119,18 +99,37 @@ double CustomFunction::nCBdist(double x) {
 */ 
 
 double CustomFunction::callFunction(double x) {
-
     if (dist_flag==0) {
-        return this->normdist(x);
-    }
+        return this->normdist(x);}
     if (dist_flag==1) {
-        return this->CLdist(x);
-    }
+        return this->CLdist(x);}
     if (dist_flag==2) {
-        return this->nCBdist(x);
+        return this->nCBdist(x);}
+    else {
+        std::cout << "ERROR: Invalid Distribution Flag Value. Terminating Program." << std::endl;
+        exit(1);
     }
-
 };
+
+/*
+#######################################
+//Set Negative Crystal Ball Parameters
+#######################################
+*/ 
+
+void CustomFunction::set_nCB_Vars(double n, double a, double s) {
+
+    nCB_vars.n = n;
+    nCB_vars.a = a;
+    nCB_vars.s = s;
+
+    nCB_vars.A = (pow((n/a),n))*exp(-((a*a)/2));
+    nCB_vars.B = (n/a)-a;
+    nCB_vars.C = (n/a)*(1/(n-1))*exp(-((a*a)/2));
+    nCB_vars.D = sqrt(M_PI_2)*(1+std::erf(a/1.4142135624));
+    nCB_vars.N = 1/(s*(nCB_vars.C+nCB_vars.D));
+
+}
 
 /*
 #######################################
