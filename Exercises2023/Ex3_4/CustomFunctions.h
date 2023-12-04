@@ -30,6 +30,8 @@ class CustomFunction : public FiniteFunction {
 
         void set_nCB_Vars(double n, double a, double s);
 
+        double Mstep(double x_old, double delta);
+
     protected:
 
         double normdist(double x);

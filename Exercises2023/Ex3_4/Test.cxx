@@ -47,4 +47,6 @@ int main() {
     CusFunc3.plotFunction();
     CusFunc3.plotData(points,100);
 
+    
+
 }

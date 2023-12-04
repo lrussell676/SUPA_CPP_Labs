@@ -3,6 +3,8 @@
    --------------------------------------------------------------------------------------------- */
 
 #include <math.h>
+#include <random>
+#include <iostream>
 #include "CustomFunctions.h"
 
 
@@ -129,3 +131,33 @@ double CustomFunction::callFunction(double x) {
     }
 
 };
+
+/*
+#######################################
+//Metropolis Steps
+#######################################
+*/ 
+
+double CustomFunction::Mstep(double x_old, double delta) {
+
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_real_distribution<double> distA(-delta,delta);
+
+    double x_trial = x_old + distA(rng);
+
+    double wp_a = this->callFunction(x_trial);
+    double wp_b = this->callFunction(x_old);
+
+    double w = wp_a/wp_b;
+
+    if (w >= 1) {
+        return x_trial;
+    } else {
+        std::uniform_real_distribution<double> distB(0.0,1.0);
+        if ( distB(rng) <= w) {
+            return x_trial;}
+        else {
+            return x_old;}
+    }
+}
