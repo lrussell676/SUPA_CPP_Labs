@@ -138,11 +138,14 @@ double CustomFunction::callFunction(double x) {
 #######################################
 */ 
 
-double CustomFunction::Mstep(double x_old, double delta) {
+double CustomFunction::Mstep(double x_old, double delta_min, double delta_max) {
 
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_real_distribution<double> distA(-delta,delta);
+    //std::random_device dev;
+    //std::mt19937 rng(dev());
+    std::default_random_engine rng;
+    std::uniform_real_distribution<double> distA(delta_min,delta_max);
+
+    //std::cout << distA(rng) << std::endl;
 
     double x_trial = x_old + distA(rng);
 
@@ -161,3 +164,22 @@ double CustomFunction::Mstep(double x_old, double delta) {
             return x_old;}
     }
 }
+
+/*
+#######################################
+//Set LinearSpacedArray
+#######################################
+*/ 
+
+// This is taken from: https://gist.github.com/mortenpi/f20a93c8ed3ee7785e65
+
+void CustomFunction::LinearSpacedArray(\
+std::vector<double> &xs, double a, double b, std::size_t N)
+{
+    double h = (b - a) / static_cast<double>(N-1);
+    std::vector<double>::iterator x;
+    double val;
+    for (x = xs.begin(), val = a; x != xs.end(); ++x, val += h) {
+        *x = val;
+    }
+} 

@@ -30,9 +30,9 @@ class CustomFunction : public FiniteFunction {
 
         void set_nCB_Vars(double n, double a, double s);
 
-        double Mstep(double x_old, double delta);
+        double Mstep(double x_old, double delta_min, double delta_max);
 
-    protected:
+        void LinearSpacedArray(std::vector<double> &xs, double a, double b, std::size_t N);
 
         double normdist(double x);
         double CLdist(double x);
