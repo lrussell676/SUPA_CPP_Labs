@@ -34,7 +34,7 @@ class CustomFunction : public FiniteFunction {
         void set_nCB_Vars(double n, double a, double s);    //by this void function.
 
         //Mstep defines our Metropolis Algorithm
-        double Mstep(double x_old, double delta_min=-2.0, double delta_max=2.0);
+        double Mstep(double& x_old, double mu=0.0, double std=0.5);
         //LinearSpacedArray is taken from: https://gist.github.com/mortenpi/f20a93c8ed3ee7785e65
         void LinearSpacedArray(std::vector<double> &xs, double a, double b, std::size_t N);
 

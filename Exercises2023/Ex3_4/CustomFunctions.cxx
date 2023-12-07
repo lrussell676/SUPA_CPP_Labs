@@ -137,11 +137,11 @@ void CustomFunction::set_nCB_Vars(double n, double a, double s) {
 #######################################
 */ 
 
-double CustomFunction::Mstep(double x_old, double delta_min, double delta_max) {
+double CustomFunction::Mstep(double& x_old, double mu, double std) {
 
     std::random_device dev;
     std::mt19937 rng(dev());
-    std::uniform_real_distribution<double> distA(delta_min,delta_max);
+    std::normal_distribution<double> distA(mu,std);
 
     double x_trial = x_old + distA(rng);
 
